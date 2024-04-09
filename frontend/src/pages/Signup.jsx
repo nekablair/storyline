@@ -5,9 +5,11 @@ import Form from 'react-bootstrap/Form';
 
 const Signup = () => {
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault()
-    console.log("submitted form")
+    // console.log("submitted form")
+    let response = await login(email, password, register)
+    setUser(response)
   }
 
   return (

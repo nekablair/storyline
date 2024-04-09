@@ -6,7 +6,7 @@ import './App.css'
 import axios from 'axios'
 
 function App() {
-  // const [user, setUser] = useState(useLoaderData)
+  const [user, setUser] = useState(useLoaderData)
 
   // const navigate = useNavigate()
 
@@ -16,21 +16,19 @@ function App() {
   //   }
   // }, [user])
 
-  const testAI = async() => {
-    const response = await axios.get("http://localhost:8000/api/test/")
-    console.log(response)
-  }
+  // const testConnection = async() => {
+  //   const response = await axios.get("http://localhost:8000/api/test/")
+  //   console.log(response)
+  // }
 
-  useEffect(() => {
-    testConnection()
-  }, [])
+  // useEffect(() => {
+  //   testConnection()
+  // }, [])
 
   return (
     <>
-      {/* <Navbar user = {user} setUser = {setUser} /> */}
-      <Navbar />
-      {/* <Outlet context={{ user, setUser }} /> */}
-      <Outlet />
+      <Navbar user = {user} setUser = {setUser} />
+      <Outlet context={{ user, setUser }} />
       <Footer/>
     </>
   )
