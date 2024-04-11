@@ -4,10 +4,18 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import ImageSerializer, AllImageSerializer, serialize_image
+from .image_generation import get_generated_images
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser, FileUploadParser
 from django.http import JsonResponse
+
+def generate_images_from_text(request):
+    text = request.GET.get('text')
+    images = get_generated_images(text)
+    print(images)
+    return JsonResponse({'images': images})
+
 
 class ImageUploadView(APIView):
     authentication_classes=[TokenAuthentication]
