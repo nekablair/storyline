@@ -1,12 +1,46 @@
 import React from 'react'
 import axios from 'axios'
 
+
+const baseURL = import.meta.env.VITE_BASE_URL;
+
 export const api = axios.create({
-  baseURL: import.meta.env.Vite_Base_URL,
+  baseURL,
 })
 
+
+// export const login = async (email, password, register) => {
+//   let response = await api.post(`api/v1/users/${register ? "signup" : "login"}/`, {
+//     email:email,
+//     password:password,
+//   })
+//   if (response.status === 200 || response.status === 201) {
+//     let token = response.data.token;
+//     api.defaults.headers.common["Authorization"] = `Token ${token}`
+//     localStorage.setItem("token", token)
+//     return response.data.user;
+//   } else {
+//     alert("Log in failed")
+//   }
+// }
+
+export const signup = async (email, password, register) => {
+  let response = await axios.post(`http://127.0.0.1:8000/api/v1/users/signup/`, {
+    email:email,
+    password:password,
+  })
+  if (response.status === 200 || response.status === 201) {
+    let token = response.data.token;
+    api.defaults.headers.common["Authorization"] = `Token ${token}`
+    localStorage.setItem("token", token)
+    return response.data.user;
+  } else {
+    alert("Signup failed")
+  }
+}
+
 export const login = async (email, password, register) => {
-  let response = await api.post(`api/v1/users/${register ? "signup" : "login"}/`, {
+  let response = await axios.post(`http://127.0.0.1:8000/api/v1/users/login/`, {
     email:email,
     password:password,
   })
@@ -23,7 +57,7 @@ export const login = async (email, password, register) => {
 export const fetchImages = async() => {
   // try {
   // const response = await axios.get(`http://127.0.0.1:8000/api/images/an_image/${imageId}/`)
-  const response = await axios.get(`http://127.0.0.1:8000/api/images/all_images/`) 
+  const response = await axios.get(`http://127.0.0.1:8000/api/v1/images/all_images/`) 
   // let response = await api.get(`/images/all_images/`)
   console.log(response)
   // console.log(response.data.images)

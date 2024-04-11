@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     # 'corsheaders',
     'user_app',
     'image_app',
-    'storages'
+    'storages',
+    'story_app',
+    'pages_app'
     # 'upload'
 ]
 

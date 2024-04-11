@@ -13,17 +13,16 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-
-
 class Sign_up(APIView):
     def post(self, request):
         request.data["username"] = request.data["email"]
         user = User.objects.create_user(**request.data)
+        print(request.data)
+        print(user)
         token = Token.objects.create(user=user)
         return Response(
         {"user": user.email, "token": token.key}, status=HTTP_201_CREATED
         )
-
 
 class Log_in(APIView):
     def post(self, request):
@@ -35,11 +34,6 @@ class Log_in(APIView):
             return Response({"token": token.key, "user": user.email})
         else:
             return Response("No user matching credentials", status=HTTP_404_NOT_FOUND)
-
-# class TokenReq(APIView):
-
-#     authentication_classes=[TokenAuthentication]
-#     permission_classes = [IsAuthenticated]
             
 class Info(APIView):
     authentication_classes = [TokenAuthentication]
@@ -48,7 +42,6 @@ class Info(APIView):
     def get(self, request):
         return Response({"email": request.user.email})
 
-
 class Log_out(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -56,5 +49,3 @@ class Log_out(APIView):
     def post(self, request):
         request.user.auth_token.delete()
         return Response(status=HTTP_204_NO_CONTENT)
-
-        

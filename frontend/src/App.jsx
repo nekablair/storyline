@@ -6,7 +6,8 @@ import './App.css'
 import axios from 'axios'
 
 function App() {
-  const [user, setUser] = useState(useLoaderData)
+  // const [user, setUser] = useState(useLoaderData)
+  const [user, setUser] = useState()
 
   // const navigate = useNavigate()
 

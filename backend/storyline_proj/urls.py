@@ -26,8 +26,10 @@ def connection_test(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/users/', include("user_app.urls")),
-    path('api/images/', include("image_app.urls")),
-    path('api/test/', connection_test)
+    path('api/v1/images/', include("image_app.urls")),
+    path('api/test/', connection_test),
+    path('api/v1/pages', include("story_app.urls")),
+    path('api/v1/story/', include("story_app.urls"))
 ]
 
 # if settings.DEBUG:
