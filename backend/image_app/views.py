@@ -4,18 +4,17 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from .serializers import ImageSerializer, AllImageSerializer, serialize_image
-from .image_generation import get_generated_images
+from .image_generation import get_generated_images, save_image
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser, FileUploadParser
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 def generate_images_from_text(request):
-    text = request.GET.get('text')
+    text = request.POST.get('text')
     images = get_generated_images(text)
-    print(images)
-    return JsonResponse({'images': images})
-
+    # print(images)
+    return HttpResponse({'images': images})
 
 class ImageUploadView(APIView):
     authentication_classes=[TokenAuthentication]
@@ -42,10 +41,11 @@ class ImageListView(APIView):
         return Response({'images': serialized_images})
 
 class An_Image(APIView):
-    def get(self, request, id):
+    def post(self, request, id):
         images = ImageModel.objects.get(id=id)
         ser_images = serialize_image(images)
         image_data = ser_images
+        print(image_data)
         if images is not None:
             return Response({'image':image_data}, status=status.HTTP_200_OK)
         else:
