@@ -28,8 +28,11 @@ const Signup = () => {
 
   return (
     <>
-    <div>Signup</div>
-    <h1>{register ? "Register" : "Login" }</h1>
+    {/* <div>Signup</div> */}
+    <h1>
+      {/* {register ? "Register" : "Login" } */}
+      Sign Up
+    </h1>
     <Form onSubmit={(e)=>{submitForm(e)}}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
@@ -43,8 +46,9 @@ const Signup = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={() => setRegister(!register)}>
-          {register ? "Already have an account": "Don't have an account?"}
+        <Button variant="warning" type="submit" onClick={() => setRegister(!register)}>
+          {/* {register ? "Already have an account": "Don't have an account?"} */}
+          Sign Up
         </Button>
       </Form>
     </>

@@ -8,6 +8,8 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Storyline from './pages/Storyline'
 import Progression from './pages/Progression'
+import Favorites from './pages/Favorites'
+import Stories from './pages/Stories'
 import { createBrowserRouter } from 'react-router-dom'
 
 
@@ -40,6 +42,14 @@ const router = createBrowserRouter([{
         {
             path:"finalstory/",
             element: <Finalstoryline/>
+        },
+        {
+            path:"favorites/",
+            element: <Favorites/>
+        },
+        {
+            path:"stories/",
+            element: <Stories/>
         },
         {
             path:"*",

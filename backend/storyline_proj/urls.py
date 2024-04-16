@@ -28,7 +28,7 @@ urlpatterns = [
     path('api/v1/users/', include("user_app.urls")),
     path('api/v1/images/', include("image_app.urls")),
     path('api/test/', connection_test),
-    path('api/v1/pages', include("story_app.urls")),
+    path('api/v1/pages/', include("pages_app.urls")),
     path('api/v1/story/', include("story_app.urls"))
 ]
 

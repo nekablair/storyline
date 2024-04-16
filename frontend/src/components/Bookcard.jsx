@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { fetchImages } from '../utilities'
+import Card from 'react-bootstrap/Card';
 
 function Bookcard({ imageId }) {
   const [imageData, setImageData] = useState(null)
@@ -58,6 +59,18 @@ function Bookcard({ imageId }) {
       Cumque nemo excepturi qui molestias voluptatum aut alias molestiae vitae repellat doloribus labore exercitationem tenetur sapiente fugit, earum corrupti repellendus aperiam ea! Fuga sunt esse, asperiores natus doloribus exercitationem dolores.
       Culpa cupiditate fugit nesciunt vero ipsa debitis praesentium nulla magni, voluptatum voluptatem libero numquam assumenda pariatur vel error laboriosam non? Veniam cupiditate tempore ipsa distinctio commodi facilis maxime provident quasi.
       Consectetur deserunt voluptatum magnam amet tempore totam suscipit, quisquam distinctio molestiae voluptatibus ea magni quidem nostrum similique eum deleniti iusto! Cum maiores nam ea atque in iste qui necessitatibus dicta!</p>
+
+      <Card className="bg-dark text-white">
+      <Card.Img src="holder.js/100px270" alt="Card image" />
+      <Card.ImgOverlay>
+        <Card.Title>Card title</Card.Title>
+        <Card.Text>
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer.
+        </Card.Text>
+        <Card.Text>Last updated 3 mins ago</Card.Text>
+      </Card.ImgOverlay>
+    </Card>
     </>
   )
 }

@@ -102,3 +102,4 @@ def save_image(image_url):
     except Exception as e:
         print('Error saving image:', e)
         return JsonResponse({'error': 'An error occurred while saving the image'}, status=500)
+    

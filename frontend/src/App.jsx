@@ -1,5 +1,5 @@
 import { useState, useEffect} from 'react'
-import Navbar from './components/Navbar'
+import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import { Outlet, useNavigate, useLoaderData } from 'react-router-dom'
 import './App.css'
@@ -28,7 +28,7 @@ function App() {
 
   return (
     <>
-      <Navbar user = {user} setUser = {setUser} />
+      <NavBar user = {user} setUser = {setUser} />
       <Outlet context={{ user, setUser }} />
       <Footer/>
     </>
