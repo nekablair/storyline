@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from story_app.models import Story
+from .form import StoryForm
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
@@ -11,6 +12,7 @@ from django.http import JsonResponse, HttpResponse
 from .utils import get_short_story, generate_story
 from image_app.views import An_Image
 from image_app.image_generation import save_image
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser, FileUploadParser
 
 
 
@@ -32,7 +34,23 @@ def generate_story_from_words(request):
     story = generate_story(words) # Call the generate_story function with the extracted words
     return JsonResponse({'story': story}) # Return the story as a JSON response
 
+class StoryUploadView(APIView):
+    authentication_classes=[TokenAuthentication]
+    permission_classes=[IsAuthenticated]
+    parser_classes = [JSONParser, MultiPartParser, FormParser, FileUploadParser]
 
+    def post(self, request):    
+        print(request.data)
+        serializer = StorySerializer(data=request.data)
+        # if request.method == 'POST':
+        form = StoryForm(request.POST, request.FILES)
+        if form.is_valid() & serializer.is_valid():
+            form.save()
+            serializer.save()
+                # return redirect('image_list')
+            return Response({'message' : 'Story uploaded successfully'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'Failed to upload story'}, status=status.HTTP_400_BAD_REQUEST)
 
 # Create your views here.
 class All_Stories(APIView):
