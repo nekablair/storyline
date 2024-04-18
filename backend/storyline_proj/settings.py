@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import PIL
 import os
+import boto3
 
 load_dotenv()
 
@@ -74,7 +75,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -166,3 +167,4 @@ AWS_ACCESS_KEY_ID = os.getenv('AWS_DJANGO_S3_USER_SECRET_ACCESS_KEY')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_S3_ACCESS_KEY_ID')
 AWS_STORAGE_BUCKET_NAME = 'storyline-images'
 AWS_QUERYSTRING_AUTH = False #ensure accesskey isn't in url, boolean
+# s3://storyline-images/media/

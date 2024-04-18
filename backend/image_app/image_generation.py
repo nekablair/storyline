@@ -8,6 +8,9 @@ import requests
 import io
 from PIL import Image
 import boto3
+from dotenv import load_dotenv
+import PIL
+import os
 from storyline_proj.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_STORAGE_BUCKET_NAME
 
 
@@ -19,8 +22,10 @@ client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 
 # s3 = boto3.client(
 #     's3',
-#     aws_access_key_id=env.get("AWS_ACCESS_KEY_ID"),
-#     aws_secret_access_key=env.get("AWS_SECRET_ACCESS_KEY")
+#     aws_access_key_id = os.getenv('AWS_DJANGO_S3_USER_SECRET_ACCESS_KEY'),
+#     aws_secret_access_key= os.getenv('AWS_S3_ACCESS_KEY_ID')
+#     # aws_access_key_id=env.get("AWS_ACCESS_KEY_ID"),
+#     # aws_secret_access_key=env.get("AWS_SECRET_ACCESS_KEY")
 # )
 
 # def get_generated_images(text):
@@ -64,42 +69,60 @@ def get_generated_images(text):
 # Show the result that has been pushed to a url
 # webbrowser.open(response.data.url)
     image_url = response.data[0].url
-    webbrowser.open(image_url)
+    webbrowser.open(image_url) #opens up image_url in webpage
     return JsonResponse({'image_url':image_url})
     
 
 
 def save_image(image_url):
-    try:
-        # image_url = temp_image
-        response = requests.get(image_url)
-        image_data = io.Bytes(response.content)
-        print('IMAGE URL:', image_url)
-        
+
+    # image_url = temp_image
+        #we need to turn it into a jpg (bc dalle urls expire after 1 hr) then store into google cloud and retrieve that url
         # Fetch the image data from the provided URL
-        # response = requests.get(image_url)
-        # image_data = io.BytesIO(response.content)
-        
+        response = requests.get(image_url)
+        image_data = io.BytesIO(response.content)
         # Open image using PIL
         image = Image.open(image_data)
+        # Convert the image to JPEG format
+        output = io.BytesIO()
+        image.save(output, format='JPEG')
+        jpeg_data = output.getvalue()
+        # Create a unique filename
+        filename = f"{int(time.time())}.jpeg"
+        # s3.put_object(Body=jpeg_data, Bucket='openadventureimages', Key=filename, ContentType='image/jpeg')
+        # # Get the URL of the uploaded image
+        # image_url = f"https://openadventureimages.s3.amazonaws.com/{filename}"
+        return image_url
+    # try:
+    #     # image_url = temp_image
+    #     response = requests.get(image_url)
+    #     image_data = io.Bytes(response.content)
+    #     print('IMAGE URL:', image_url)
         
-        # # Convert the image to JPEG format
-        # output = io.BytesIO()
-        # image.save(output, format='JPEG')
-        # jpeg_data = output.getvalue()
+    #     # Fetch the image data from the provided URL
+    #     # response = requests.get(image_url)
+    #     # image_data = io.BytesIO(response.content)
         
-        # # Create a unique filename
-        # filename = f"{int(time.time())}.jpeg"
+    #     # Open image using PIL
+    #     image = Image.open(image_data)
         
-        # Upload image to S3
-        # s3.put_object(Body=jpeg_data, Bucket='dalle-image-storage', Key=filename, ContentType='image/jpeg')
+    #     # # Convert the image to JPEG format
+    #     output = io.BytesIO()
+    #     image.save(output, format='JPEG')
+    #     jpeg_data = output.getvalue()
         
-        # Get the URL of the uploaded image
-        # image_url = f"https://dalle-image-storage.s3.amazonaws.com/{filename}"
+    #     # # Create a unique filename
+    #     filename = f"{int(time.time())}.jpeg"
         
-        # return  image_url
-        return JsonResponse({'success': True})
-    except Exception as e:
-        print('Error saving image:', e)
-        return JsonResponse({'error': 'An error occurred while saving the image'}, status=500)
+    #     # Upload image to S3
+    #     s3.put_object(Body=jpeg_data, Bucket='dstoryline-images', Key=filename, ContentType='image/jpeg')
+        
+    #     # Get the URL of the uploaded image
+    #     image_url = f"https://storyline.s3.amazonaws.com/{filename}"
+        
+    #     # return  image_url
+    #     return JsonResponse({'success': True})
+    # except Exception as e:
+    #     print('Error saving image:', e)
+    #     return JsonResponse({'error': 'An error occurred while saving the image'}, status=500)
     

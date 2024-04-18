@@ -35,20 +35,23 @@ def generate_story_from_words(request):
     return JsonResponse({'story': story}) # Return the story as a JSON response
 
 class StoryUploadView(APIView):
-    authentication_classes=[TokenAuthentication]
-    permission_classes=[IsAuthenticated]
-    parser_classes = [JSONParser, MultiPartParser, FormParser, FileUploadParser]
+    # authentication_classes=[TokenAuthentication]
+    # permission_classes=[IsAuthenticated]
+    # parser_classes = [JSONParser, MultiPartParser, FormParser, FileUploadParser]
 
-    def post(self, request):    
+    def post(self, request, words):    
         print(request.data)
         serializer = StorySerializer(data=request.data)
+        
         # if request.method == 'POST':
-        form = StoryForm(request.POST, request.FILES)
-        if form.is_valid() & serializer.is_valid():
-            form.save()
+        # form = StoryForm(request.POST, request.FILES)
+        # if form.is_valid() and serializer.is_valid():
+        if serializer.is_valid():
+            # form.save()
             serializer.save()
                 # return redirect('image_list')
-            return Response({'message' : 'Story uploaded successfully'}, status=status.HTTP_200_OK)
+            print("story saved successfully!!!!!!!!!!!!!!")
+            return Response({'message' : 'Story uploaded successfully'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'message': 'Failed to upload story'}, status=status.HTTP_400_BAD_REQUEST)
 

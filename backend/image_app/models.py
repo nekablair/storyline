@@ -9,6 +9,8 @@ def upload_to(instance, filename):
 class ImageModel(models.Model):
     name = models.CharField(max_length=150)
     image_data = models.ImageField(_("Image"), upload_to='media/')
+    image_binary = models.BinaryField(default=b'')
+
 
     def __str__(self):
         return self.name
