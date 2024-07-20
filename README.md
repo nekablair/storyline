@@ -41,3 +41,6 @@ Connect with fellow young readers through StoryLine's vibrant online community. 
 Have questions or feedback? We'd love to hear from you! Contact us at support@storylineapp.com or visit our website at www.storylineapp.com for more information.
 
 Start your adventure today with StoryLine—where imagination knows no bounds!
+
+* Copyright 2024 Storyline
+This cannot be copied and/or distributed without the express permission of Neka Blair.
